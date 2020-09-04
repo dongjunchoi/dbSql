@@ -126,13 +126,14 @@ WHERE job = 'SALESMAN' OR empno LIKE '78%';
 --emp 테이블에서 job이 SALESMAN이거나 사원번호가 78로 시작하는 직원의 정보를 조회(LIKE 연산자를 사용하지 마세요)
 SELECT *
 FROM emp
-WHERE job = 'SALESMAN' OR empno '78%';
+--WHERE job = 'SALESMAN' OR SUBSTR(empno, 1, 2) = 78;
+WHERE job ='SALESMAN' OR empno BETWEEN 7800 AND 7899;
 
 논리연산[AND, OR 실습 WHERE14]
 --emp 테이블에서 1.job이 SALESMAN이거나 2.사원번호가 78로 시작하면서 입사일자가 1981년6월1일 이후인 직원의 정보 조회(1 또는 2만족하는직원)
 SELECT *
 FROM emp
-WHERE job = ('SALESMAN' OR empno LIKE '78%') AND hiredate TO_DATE('1981/06/01' , 'yyyy/mm/dd');
+WHERE job = 'SALESMAN' OR empno LIKE '78%' AND hiredate >= TO_DATE('1981/06/01' , 'yyyy/mm/dd');
 
 RDBMS는 집합에서 많은 부분을 차용
 집합의 특징 : 1.순서가 없다  2. 중복을 허용하지 않는다.
