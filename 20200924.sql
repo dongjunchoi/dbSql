@@ -29,7 +29,7 @@ FROM emp_test2;
 
 실적 테이블 : 20190101~20191231 실적데이터 ==> SALES_2019테이블 저장
             20200101~20201231 실적데이터 ==> SALES_2020테이블 저장
-    개별년도 계산은 상관 없으나 19,20년도 데이터를 동시에 보기 위해서는 UNION ALL 혹은 쿼리르 두번 사용해야함
+    개별년도 계산은 상관 없으나 19,20년도 데이터를 동시에 보기 위해서는 UNION ALL 혹은 쿼리를 두번 사용해야함
 
 *오라클 파티션 기능(오라클 공식 버전에서만 지원, xe에서는 지원하지 않음)
 테이블을 생성하고, 입력되는 값에 따라 오라클 내부적으로 별도의 영역에다가 저장
@@ -38,7 +38,7 @@ FROM emp_test2;
     
 MERGE ******알면 편하고, dbms 입장에서도 두번 실행할 sql을 한번으로 줄일 수 있다.***********
 특정 테이블에 입력하려는 데이터가 없으면 입력하고, 있으면 업데이트를 한다.
-9000,'brown' 데이터를 emp_test 넣으료고 하는데 
+9000,'brown' 데이터를 emp_test 넣으려고 하는데 
     emp_test 테이블에 9000번 사번을 갖고 있는 사원이 있으면 이름을 업데이트 하고 사원이 없으면 신규로 입력
 
 merge 구문을 사용하지 않고 위 시나리오 대로 개발을 하려면 적어도 2개의 sql을 실행 해야함
@@ -152,6 +152,7 @@ SELECT deptno, SUM(sal)
 FROM emp
 GROUP BY ROLLUP(deptno);
 
+
 ***rollup은 오른쪽 컬럼을 하나씩 제거 하며 group by를 한다!!(중요!)**
 GROUP BY ROLLUP(deptno)
 GROUP BY deptno -> GROUP BY 전체
@@ -256,7 +257,7 @@ WHERE e.deptno = d.deptno
 GROUP BY ROLLUP(dname,job)
 ORDER BY dname, sal DESC;
 --nvl 사용
-SELECT NVL(NVL(d.dname, null),'총합') dname, e.job, SUM(sal + NVL(comm, 0)) sal
+SELECT NVL(d.dname,'총합') dname, e.job, SUM(sal + NVL(comm, 0)) sal
 FROM emp e ,dept d
 WHERE e.deptno = d.deptno
 GROUP BY ROLLUP(dname,job)
